@@ -2,7 +2,7 @@ package be.continuum.slice.controller;
 
 import be.continuum.slice.command.CreateOrderCommand;
 import be.continuum.slice.model.Order;
-import be.continuum.slice.model.OrderQuantity;
+import be.continuum.slice.model.OrderLine;
 import be.continuum.slice.model.Product;
 import be.continuum.slice.service.CustomerService;
 import be.continuum.slice.service.OrderService;
@@ -66,8 +66,8 @@ public class OrderRestController {
                                                            ));
 
         createOrderCommand.getEntries()
-                   .forEach(entry -> order.getProducts()
-                                          .add(OrderQuantity.of(productMap.get(entry.getProductName()), entry.getAmount())));
+                   .forEach(entry -> order.getOrderLines()
+                                          .add(OrderLine.of(productMap.get(entry.getProductName()), entry.getAmount())));
 
 
         return orderService.save(order);

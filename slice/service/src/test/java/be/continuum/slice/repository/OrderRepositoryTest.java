@@ -3,7 +3,7 @@ package be.continuum.slice.repository;
 import be.continuum.slice.model.ConsumableProduct;
 import be.continuum.slice.model.Customer;
 import be.continuum.slice.model.Order;
-import be.continuum.slice.model.OrderQuantity;
+import be.continuum.slice.model.OrderLine;
 import be.continuum.slice.model.Product;
 import be.continuum.slice.respository.CustomerRepository;
 import be.continuum.slice.respository.OrderRepository;
@@ -65,8 +65,8 @@ public class OrderRepositoryTest {
                               .customer(customer)
                               .build();
 
-        o1.getProducts()
-          .add(OrderQuantity.of(product, 1));
+        o1.getOrderLines()
+          .add(OrderLine.of(product, 1));
 
         orderRepository.save(o1);
 

@@ -30,7 +30,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString
 
 @Entity
-public class OrderQuantity {
+public class OrderLine {
 
     @Id
     @Column(name = "product_name")
@@ -44,11 +44,11 @@ public class OrderQuantity {
 
     private int amount;
 
-    public static OrderQuantity of(
+    public static OrderLine of(
             final Product product,
             int amount
     ) {
-        return new OrderQuantity(product.getName(), product, amount);
+        return new OrderLine(product.getName(), product, amount);
     }
 
 }

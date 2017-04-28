@@ -9,7 +9,7 @@ import be.continuum.slice.event.PhoneNumberRemovedEvent;
 import be.continuum.slice.mapper.CustomerCommandMapper;
 import be.continuum.slice.model.Customer;
 import be.continuum.slice.service.CustomerService;
-import be.continuum.slice.value.Address;
+import be.continuum.slice.model.Address;
 import be.continuum.slice.value.FoodAllergen;
 import be.continuum.slice.value.PhoneNumber;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,16 @@
-package be.continuum.slice.value;
+package be.continuum.slice.model;
 
+import be.continuum.slice.value.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -21,10 +26,12 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @EqualsAndHashCode
 @ToString
+@Embeddable
 public class Address {
     private String street;
     private String number;
     private String city;
     private String zipCode;
+    @Enumerated(EnumType.STRING)
     private Country country;
 }

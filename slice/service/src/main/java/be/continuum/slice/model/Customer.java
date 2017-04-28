@@ -3,7 +3,6 @@ package be.continuum.slice.model;
 import be.continuum.slice.event.PhoneNumberAddedEvent;
 import be.continuum.slice.event.CustomerDataChangedEvent;
 import be.continuum.slice.event.PhoneNumberRemovedEvent;
-import be.continuum.slice.value.Address;
 import be.continuum.slice.value.FoodAllergen;
 import be.continuum.slice.value.PhoneNumber;
 import lombok.AllArgsConstructor;
@@ -74,7 +73,6 @@ public class Customer {
     @Column(name = "allergen")
     private final Set<FoodAllergen> allergens = new HashSet<>();
 
-    @Embedded
     @ElementCollection
     @CollectionTable(
             name = "customer_address",

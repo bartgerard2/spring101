@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @author bartgerard
  * @version v0.0.1
  */
-@Component
+//@Component
 @Log
 public class LoggingBeanPostProcessor implements BeanPostProcessor {
 

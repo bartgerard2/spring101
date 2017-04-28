@@ -1,5 +1,6 @@
 package be.continuum.slice.model;
 
+import be.continuum.slice.value.ProductName;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
@@ -32,9 +34,9 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 public class OrderLine {
 
-    @Id
+    @EmbeddedId
     @Column(name = "product_name")
-    private String productName;
+    private ProductName productName;
 
     @Getter(NONE)
     @MapsId

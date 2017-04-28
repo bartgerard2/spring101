@@ -4,6 +4,7 @@ import be.continuum.slice.model.ConsumableProduct;
 import be.continuum.slice.model.Product;
 import be.continuum.slice.service.ProductService;
 import be.continuum.slice.value.Category;
+import be.continuum.slice.value.ProductName;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,13 +51,13 @@ public class ProductRestControllerTest {
 
         when(productService.findAll()).thenReturn(Arrays.asList(
                 ConsumableProduct.builder()
-                                 .name("mars")
-                                 .category(candy)
-                                 .build(),
+                        .name(ProductName.of("mars"))
+                        .category(candy)
+                        .build(),
                 ConsumableProduct.builder()
-                                 .name("bounty")
-                                 .category(candy)
-                                 .build()
+                        .name(ProductName.of("bounty"))
+                        .category(candy)
+                        .build()
         ));
 
         when(productService.save(Mockito.any(Product.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
@@ -65,13 +66,13 @@ public class ProductRestControllerTest {
     @Test
     public void retrieveAllProducts() throws Exception {
         mockMvc.perform(get("/products"))
-               .andExpect(status().isOk())
-               .andDo(MockMvcResultHandlers.print()) // prints header, response and request
-               .andExpect(jsonPath("$", hasSize(2)))
-               .andExpect(jsonPath("$[0].name", is("mars")))
-               .andExpect(jsonPath("$[0].category.name", is("candy")))
-               .andExpect(jsonPath("$[1].name", is("bounty")))
-               .andExpect(jsonPath("$[1].category.name", is("candy")));
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print()) // prints header, response and request
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name.name", is("mars")))
+                .andExpect(jsonPath("$[0].category.name", is("candy")))
+                .andExpect(jsonPath("$[1].name.name", is("bounty")))
+                .andExpect(jsonPath("$[1].category.name", is("candy")));
     }
 
     @Test
@@ -79,12 +80,12 @@ public class ProductRestControllerTest {
         mockMvc.perform(
                 post("/products/consumables")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content("{\"name\":\"twix\"}")
+                        .content("{\"name\":{\"name\":\"twix\"}}")
         )
-               .andExpect(status().isOk())
-               .andDo(MockMvcResultHandlers.print())
-               .andExpect(jsonPath("name", is("twix")))
-               .andExpect(jsonPath("type", is("CONSUMABLE")));
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("name.name", is("twix")))
+                .andExpect(jsonPath("type", is("CONSUMABLE")));
     }
 
     @Test
@@ -92,12 +93,12 @@ public class ProductRestControllerTest {
         mockMvc.perform(
                 post("/products/non-consumables")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content("{\"name\":\"kitchen-knife\"}")
+                        .content("{\"name\":{\"name\":\"kitchen-knife\"}}")
         )
-               .andExpect(status().isOk())
-               .andDo(MockMvcResultHandlers.print())
-               .andExpect(jsonPath("name", is("kitchen-knife")))
-               .andExpect(jsonPath("type", is("NON_CONSUMABLE")));
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("name.name", is("kitchen-knife")))
+                .andExpect(jsonPath("type", is("NON_CONSUMABLE")));
     }
 
 }

@@ -1,6 +1,7 @@
 package be.continuum.slice.model;
 
 import be.continuum.slice.value.Category;
+import be.continuum.slice.value.ProductName;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -36,13 +38,13 @@ import static lombok.AccessLevel.PROTECTED;
 @DiscriminatorColumn(name = "type")
 public abstract class Product {
 
-    @Id
     @NonNull
-    private String name;
+    @EmbeddedId
+    private ProductName name;
 
+    @NonNull
     @Embedded
     @AttributeOverride(name = "name", column = @Column(name = "category", length = 100))
-    @NonNull
     private Category category;
 
     public abstract Type getType();

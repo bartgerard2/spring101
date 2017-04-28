@@ -1,6 +1,7 @@
 package be.continuum.slice.model;
 
 import be.continuum.slice.value.Category;
+import be.continuum.slice.value.ProductName;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +26,7 @@ public class ConsumableProduct extends Product {
 
     @Builder
     public ConsumableProduct(
-            String name,
+            ProductName name,
             Category category,
             String field1
     ) {

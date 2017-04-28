@@ -1,5 +1,6 @@
 package be.continuum.slice.command;
 
+import be.continuum.slice.value.ProductName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class CreateOrderCommand {
     @Builder
     @ToString
     public static class OrderEntry {
-        private String productName;
+        private ProductName productName;
         private int amount;
     }
 

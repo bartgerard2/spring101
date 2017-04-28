@@ -2,6 +2,7 @@ package be.continuum.slice.service;
 
 import be.continuum.slice.model.Product;
 import be.continuum.slice.respository.ProductRepository;
+import be.continuum.slice.value.ProductName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public Product findOne(String name) {
+    public Product findOne(ProductName name) {
         return productRepository.findOne(name);
     }
 
@@ -33,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll(final Collection<String> names) {
+    public List<Product> findAll(final Collection<ProductName> names) {
         return productRepository.findAll(names);
     }
 

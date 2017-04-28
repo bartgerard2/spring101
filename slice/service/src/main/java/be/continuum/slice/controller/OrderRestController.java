@@ -7,6 +7,7 @@ import be.continuum.slice.model.Product;
 import be.continuum.slice.service.CustomerService;
 import be.continuum.slice.service.OrderService;
 import be.continuum.slice.service.ProductService;
+import be.continuum.slice.value.ProductName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,26 +49,26 @@ public class OrderRestController {
     @PostMapping
     public Order order(@RequestBody final CreateOrderCommand createOrderCommand) {
         final Order order = Order.builder()
-                                 .customer(customerService.findOne(createOrderCommand.getUsername()))
-                                 .build();
+                .customer(customerService.findOne(createOrderCommand.getUsername()))
+                .build();
 
 
-        final Map<String, Product> productMap = createOrderCommand.getEntries()
-                                                           .stream()
-                                                           .map(CreateOrderCommand.OrderEntry::getProductName)
-                                                           .collect(Collectors.collectingAndThen(
-                                                                   Collectors.toList(),
-                                                                   productService::findAll)
-                                                           )
-                                                           .stream()
-                                                           .collect(Collectors.toMap(
-                                                                   Product::getName,
-                                                                   Function.identity()
-                                                           ));
+        final Map<ProductName, Product> productMap = createOrderCommand.getEntries()
+                .stream()
+                .map(CreateOrderCommand.OrderEntry::getProductName)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        productService::findAll)
+                )
+                .stream()
+                .collect(Collectors.toMap(
+                        Product::getName,
+                        Function.identity()
+                ));
 
         createOrderCommand.getEntries()
-                   .forEach(entry -> order.getOrderLines()
-                                          .add(OrderLine.of(productMap.get(entry.getProductName()), entry.getAmount())));
+                .forEach(entry -> order.getOrderLines()
+                        .add(OrderLine.of(productMap.get(entry.getProductName()), entry.getAmount())));
 
 
         return orderService.save(order);

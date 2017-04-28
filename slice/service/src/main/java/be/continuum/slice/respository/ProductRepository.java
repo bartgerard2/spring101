@@ -1,6 +1,7 @@
 package be.continuum.slice.respository;
 
 import be.continuum.slice.model.Product;
+import be.continuum.slice.value.ProductName;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author bartgerard
  * @version v0.0.1
  */
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends JpaRepository<Product, ProductName> {
 }

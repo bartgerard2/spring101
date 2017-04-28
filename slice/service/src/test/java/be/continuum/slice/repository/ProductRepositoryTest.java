@@ -4,6 +4,7 @@ import be.continuum.slice.model.ConsumableProduct;
 import be.continuum.slice.model.Product;
 import be.continuum.slice.respository.ProductRepository;
 import be.continuum.slice.value.Category;
+import be.continuum.slice.value.ProductName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class ProductRepositoryTest {
     @Test
     public void saveConsumableProduct() {
         final ConsumableProduct p1 = ConsumableProduct.builder()
-                                                      .name("twix")
-                                                      .category(Category.of("CANDY"))
-                                                      .build();
+                .name(ProductName.of("twix"))
+                .category(Category.of("CANDY"))
+                .build();
 
         productRepository.save(p1);
 
-        final Product p2 = productRepository.findOne("twix");
+        final Product p2 = productRepository.findOne(ProductName.of("twix"));
 
         assertThat(p2).isEqualTo(p1);
     }

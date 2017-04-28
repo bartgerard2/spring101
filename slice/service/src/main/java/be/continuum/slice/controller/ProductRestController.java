@@ -4,6 +4,7 @@ import be.continuum.slice.model.ConsumableProduct;
 import be.continuum.slice.model.NonConsumableProduct;
 import be.continuum.slice.model.Product;
 import be.continuum.slice.service.ProductService;
+import be.continuum.slice.value.ProductName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class ProductRestController {
 
     @GetMapping("{name}")
     public Product byName(@PathVariable final String name) {
-        return productService.findOne(name);
+        return productService.findOne(ProductName.of(name));
     }
 
     @GetMapping

@@ -9,6 +9,7 @@ import be.continuum.slice.respository.CustomerRepository;
 import be.continuum.slice.respository.OrderRepository;
 import be.continuum.slice.respository.ProductRepository;
 import be.continuum.slice.value.Category;
+import be.continuum.slice.value.ProductName;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,18 +41,18 @@ public class OrderRepositoryTest {
     @Before
     public void setUp() {
         final Customer c1 = Customer.builder()
-                                    .email("test")
-                                    .username("test")
-                                    .firstName("test")
-                                    .lastName("test")
-                                    .build();
+                .email("test")
+                .username("test")
+                .firstName("test")
+                .lastName("test")
+                .build();
 
         customerRepository.save(c1);
 
         final ConsumableProduct p1 = ConsumableProduct.builder()
-                                                      .name("milky-way")
-                                                      .category(Category.of("CANDY"))
-                                                      .build();
+                .name(ProductName.of("milky-way"))
+                .category(Category.of("CANDY"))
+                .build();
 
         productRepository.save(p1);
     }
@@ -59,14 +60,14 @@ public class OrderRepositoryTest {
     @Test
     public void saveOrder() {
         final Customer customer = customerRepository.findOne("test");
-        final Product product = productRepository.findOne("milky-way");
+        final Product product = productRepository.findOne(ProductName.of("milky-way"));
 
         final Order o1 = Order.builder()
-                              .customer(customer)
-                              .build();
+                .customer(customer)
+                .build();
 
         o1.getOrderLines()
-          .add(OrderLine.of(product, 1));
+                .add(OrderLine.of(product, 1));
 
         orderRepository.save(o1);
 

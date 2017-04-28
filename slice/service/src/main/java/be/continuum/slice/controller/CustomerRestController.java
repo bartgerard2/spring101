@@ -1,8 +1,12 @@
 package be.continuum.slice.controller;
 
-import be.continuum.slice.event.PhoneNumberAddedEvent;
+import be.continuum.slice.command.AddPhoneNumberCommand;
+import be.continuum.slice.command.ChangeCustomerDataCommand;
+import be.continuum.slice.command.RemovePhoneNumberCommand;
 import be.continuum.slice.event.CustomerDataChangedEvent;
+import be.continuum.slice.event.PhoneNumberAddedEvent;
 import be.continuum.slice.event.PhoneNumberRemovedEvent;
+import be.continuum.slice.mapper.CustomerCommandMapper;
 import be.continuum.slice.model.Customer;
 import be.continuum.slice.service.CustomerService;
 import be.continuum.slice.value.Address;
@@ -34,6 +38,8 @@ public class CustomerRestController {
 
     private final CustomerService customerService;
 
+    private final CustomerCommandMapper customerCommandMapper;
+
     @GetMapping("{username}")
     public Customer byEmail(@PathVariable final String username) {
         return customerService.findOne(username);
@@ -42,39 +48,42 @@ public class CustomerRestController {
     @PutMapping("{username}")
     public Customer save(
             @PathVariable final String username,
-            @RequestBody final CustomerDataChangedEvent customerDataChangedEvent
+            @RequestBody final ChangeCustomerDataCommand command
     ) {
-        return customerService.save(username, customer -> customer.handle(customerDataChangedEvent));
+        final CustomerDataChangedEvent event = customerCommandMapper.map(command);
+        return customerService.save(username, customer -> customer.handle(event));
     }
 
     @GetMapping("/{username}/phone-numbers")
     public Set<PhoneNumber> phonesByEmail(@PathVariable final String username) {
         return customerService.findOne(username)
-                              .getPhoneNumbers();
+                .getPhoneNumbers();
     }
 
     @PostMapping("/{username}/phone-numbers")
     public Set<PhoneNumber> addPhoneNumber(
             @PathVariable final String username,
-            @RequestBody final PhoneNumberAddedEvent phoneNumberAddedEvent
+            @RequestBody final AddPhoneNumberCommand command
     ) {
-        return customerService.save(username, customer -> customer.handle(phoneNumberAddedEvent))
-                              .getPhoneNumbers();
+        final PhoneNumberAddedEvent event = customerCommandMapper.map(command);
+        return customerService.save(username, customer -> customer.handle(event))
+                .getPhoneNumbers();
     }
 
     @DeleteMapping("/{username}/phone-numbers")
     public Set<PhoneNumber> removePhoneNumber(
             @PathVariable final String username,
-            @RequestBody final PhoneNumberRemovedEvent phoneNumberRemovedEvent
+            @RequestBody final RemovePhoneNumberCommand command
     ) {
-        return customerService.save(username, customer -> customer.handle(phoneNumberRemovedEvent))
-                              .getPhoneNumbers();
+        final PhoneNumberRemovedEvent event = customerCommandMapper.map(command);
+        return customerService.save(username, customer -> customer.handle(event))
+                .getPhoneNumbers();
     }
 
     @GetMapping("/{username}/allergens")
     public Set<FoodAllergen> allergensByEmail(@PathVariable final String username) {
         return customerService.findOne(username)
-                              .getAllergens();
+                .getAllergens();
     }
 
     @PutMapping("/{username}/allergens/{allergen}")
@@ -83,7 +92,7 @@ public class CustomerRestController {
             @PathVariable final FoodAllergen allergen
     ) {
         return customerService.save(username, customer -> customer.addAllergen(allergen))
-                              .getAllergens();
+                .getAllergens();
     }
 
     @DeleteMapping("/{username}/allergens/{allergen}")
@@ -92,13 +101,13 @@ public class CustomerRestController {
             @PathVariable final FoodAllergen allergen
     ) {
         return customerService.save(username, customer -> customer.removeAllergen(allergen))
-                              .getAllergens();
+                .getAllergens();
     }
 
     @GetMapping("/{username}/addresses")
     public Map<String, Address> addressesByEmail(@PathVariable final String username) {
         return customerService.findOne(username)
-                              .getAddresses();
+                .getAddresses();
     }
 
     @PutMapping("/{username}/addresses/{alias}")
@@ -108,7 +117,7 @@ public class CustomerRestController {
             @RequestBody final Address address
     ) {
         return customerService.save(username, customer -> customer.addAddress(alias, address))
-                              .getAddresses();
+                .getAddresses();
     }
 
     @DeleteMapping("/{username}/addresses/{alias}")
@@ -117,7 +126,7 @@ public class CustomerRestController {
             @PathVariable final String alias
     ) {
         return customerService.save(username, customer -> customer.removeAddress(alias))
-                              .getAddresses();
+                .getAddresses();
     }
 
 }

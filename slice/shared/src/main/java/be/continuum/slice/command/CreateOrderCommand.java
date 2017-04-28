@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Getter
 @Builder
 @ToString
-public class CreateOrder {
+public class CreateOrderCommand {
     private String username;
     private List<OrderEntry> entries;
 

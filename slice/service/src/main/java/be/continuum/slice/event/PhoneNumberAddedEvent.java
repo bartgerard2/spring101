@@ -1,7 +1,9 @@
 package be.continuum.slice.event;
 
+import be.continuum.slice.value.PhoneNumber;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -9,16 +11,13 @@ import lombok.ToString;
 import static lombok.AccessLevel.PRIVATE;
 
 /**
- * AddAddress
+ * AddPhoneNumber
  *
  * @author bartgerard
  * @version v0.0.1
  */
-@NoArgsConstructor(access = PRIVATE)
-@AllArgsConstructor(access = PRIVATE)
-@Getter
+@Data
 @Builder
-@ToString
-public class AddressRemovedEvent {
-    private String alias;
+public class PhoneNumberAddedEvent {
+    private final PhoneNumber phoneNumber;
 }

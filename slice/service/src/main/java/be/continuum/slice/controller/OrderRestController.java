@@ -1,6 +1,6 @@
 package be.continuum.slice.controller;
 
-import be.continuum.slice.command.CreateOrder;
+import be.continuum.slice.command.CreateOrderCommand;
 import be.continuum.slice.model.Order;
 import be.continuum.slice.model.OrderQuantity;
 import be.continuum.slice.model.Product;
@@ -46,15 +46,15 @@ public class OrderRestController {
     }
 
     @PostMapping
-    public Order order(@RequestBody final CreateOrder createOrder) {
+    public Order order(@RequestBody final CreateOrderCommand createOrderCommand) {
         final Order order = Order.builder()
-                                 .customer(customerService.findOne(createOrder.getUsername()))
+                                 .customer(customerService.findOne(createOrderCommand.getUsername()))
                                  .build();
 
 
-        final Map<String, Product> productMap = createOrder.getEntries()
+        final Map<String, Product> productMap = createOrderCommand.getEntries()
                                                            .stream()
-                                                           .map(CreateOrder.OrderEntry::getProductName)
+                                                           .map(CreateOrderCommand.OrderEntry::getProductName)
                                                            .collect(Collectors.collectingAndThen(
                                                                    Collectors.toList(),
                                                                    productService::findAll)
@@ -65,7 +65,7 @@ public class OrderRestController {
                                                                    Function.identity()
                                                            ));
 
-        createOrder.getEntries()
+        createOrderCommand.getEntries()
                    .forEach(entry -> order.getProducts()
                                           .add(OrderQuantity.of(productMap.get(entry.getProductName()), entry.getAmount())));
 

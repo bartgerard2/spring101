@@ -112,7 +112,7 @@ public class CustomerRestController {
     }
 
     @DeleteMapping("/{username}/addresses/{alias}")
-    public Map<String, Address> removeAllergen(
+    public Map<String, Address> removeAddress(
             @PathVariable final String username,
             @PathVariable final String alias
     ) {

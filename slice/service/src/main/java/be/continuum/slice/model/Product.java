@@ -41,7 +41,7 @@ public abstract class Product {
     private String name;
 
     @Embedded
-    @AttributeOverride(name = "name", column = @Column(name = "category"))
+    @AttributeOverride(name = "name", column = @Column(name = "category", length = 100))
     @NonNull
     private Category category;
 

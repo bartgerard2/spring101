@@ -8,10 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import static javax.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PRIVATE;
 
 /**
@@ -28,10 +30,21 @@ import static lombok.AccessLevel.PRIVATE;
 @ToString
 @Embeddable
 public class Address {
+
+    @Column(length = 100)
     private String street;
+
+    @Column(length = 50)
     private String number;
+
+    @Column(length = 50)
     private String city;
+
+    @Column(length = 20)
     private String zipCode;
-    @Enumerated(EnumType.STRING)
+
+    @Enumerated(STRING)
+    @Column(length = 3)
     private Country country;
+
 }

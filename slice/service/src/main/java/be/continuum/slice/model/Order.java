@@ -51,7 +51,7 @@ public class Order {
     @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "fk_order_customer"))
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "fk_order_line"))
     private final List<OrderLine> orderLines = new ArrayList<>();
 

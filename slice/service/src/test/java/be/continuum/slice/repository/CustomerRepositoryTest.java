@@ -27,11 +27,11 @@ public class CustomerRepositoryTest {
     @Test
     public void saveCustomer() {
         final Customer newCustomer = Customer.builder()
-                                             .username("test")
-                                             .email("test")
-                                             .firstName("test")
-                                             .lastName("test")
-                                             .build();
+                .username("test")
+                .email("test")
+                .firstName("test")
+                .lastName("test")
+                .build();
 
         customerRepository.save(newCustomer);
 
@@ -42,10 +42,10 @@ public class CustomerRepositoryTest {
         assertThat(c1.getLastName()).isEqualTo("test");
 
         newCustomer.handle(CustomerDataChangedEvent.builder()
-                                                 .email("test1")
-                                                 .firstName("test2")
-                                                 .lastName("test3")
-                                                 .build());
+                .email("test1")
+                .firstName("test2")
+                .lastName("test3")
+                .build());
         customerRepository.save(newCustomer);
 
         final Customer c2 = customerRepository.findOne("test");
